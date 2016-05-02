@@ -30,7 +30,6 @@
 
     <feature name="lider-sudoers-bundles" version="${project.version}">
 		<bundle>mvn:tr.org.liderahenk/lider-sudoers/${project.version}</bundle>
-		<bundle>mvn:tr.org.liderahenk/lider-sudoers-db/${project.version}</bundle>
     </feature>
 
     <feature name="lider-sudoers-dependencies" version="${project.version}">
