@@ -9,5 +9,3 @@ Lider Ahenk sudoers plug-in.
       lider-sudoers/                --> Lider plugin
       ahenk-sudoers/                --> Ahenk plugin
       scripts/                      --> helper scripts (such as automated plugin export)
-      findbugs/                     --> configuration files for findbugs plugin
-      checkstyle/                   --> configuration files for checkstyle plugin
