@@ -1,7 +1,7 @@
-# lider-ahenk-sudoers
+# lider-ahenk-sudoers-plugin
 
 
-Lider Ahenk sudoers plug-in.
+Lider Ahenk Sudoers Plug-in
 
 
     lider-ahenk-sudoers/
