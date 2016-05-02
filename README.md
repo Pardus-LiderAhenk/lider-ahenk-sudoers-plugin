@@ -1,13 +1,11 @@
-# lider-ahenk-sudoers
+# lider-ahenk-sudoers-plugin
 
 
-Lider Ahenk sudoers plug-in.
+Lider Ahenk Sudoers Plug-in
 
 
     lider-ahenk-sudoers/
-      lider-console-sudoers/  --> Lider Console plugin
-      lider-sudoers/          --> Lider plugin
-      ahenk-sudoers/          --> Ahenk plugin
+      lider-console-sudoers/        --> Lider Console plugin
+      lider-sudoers/                --> Lider plugin
+      ahenk-sudoers/                --> Ahenk plugin
       scripts/                      --> helper scripts (such as automated plugin export)
-      findbugs/                     --> configuration files for findbugs plugin
-      checkstyle/                   --> configuration files for checkstyle plugin
