@@ -42,7 +42,6 @@
 
 	<modules>
 		<module>lider-sudoers</module>
-		<module>lider-sudoers-db</module>
 		<module>lider-sudoers-feature</module>
 		<module>lider-console-sudoers</module>
 		<module>ahenk-sudoers</module>
