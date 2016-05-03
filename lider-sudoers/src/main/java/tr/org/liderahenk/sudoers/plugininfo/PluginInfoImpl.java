@@ -26,12 +26,12 @@ public class PluginInfoImpl implements IPluginInfo {
 
 	@Override
 	public boolean isUserOriented() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isPolicyPlugin() {
-		return false;
+		return true;
 	}
 	
 	@Override
