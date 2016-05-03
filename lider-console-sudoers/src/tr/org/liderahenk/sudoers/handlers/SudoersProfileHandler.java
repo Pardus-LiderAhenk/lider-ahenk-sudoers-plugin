@@ -34,7 +34,7 @@ public class SudoersProfileHandler extends AbstractHandler {
 			// profiles can be handled by Lider Console Core.
 			// We also pass our profile dialog implementation as parameter to
 			// allow the editor use it dynamically.
-			page.openEditor(new ProfileEditorInput(Messages.getString("Sudoers"), SudoersConstants.PLUGIN_NAME, 
+			page.openEditor(new ProfileEditorInput(Messages.getString("SUDOERS"), SudoersConstants.PLUGIN_NAME, 
 					SudoersConstants.PLUGIN_VERSION, new SudoersProfileDialog()), 
 					LiderConstants.EDITORS.PROFILE_EDITOR);
 		} catch (PartInitException e) {
