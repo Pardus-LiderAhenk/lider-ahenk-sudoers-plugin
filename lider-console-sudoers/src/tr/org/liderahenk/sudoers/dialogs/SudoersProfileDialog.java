@@ -15,6 +15,12 @@ import tr.org.liderahenk.liderconsole.core.model.Profile;
 import tr.org.liderahenk.sudoers.constants.SudoersConstants;
 import tr.org.liderahenk.sudoers.i18n.Messages;
 
+/**
+ * Profile definition dialog for Sudoers plugin.
+ * 
+ * @author <a href="mailto:mine.dogan@agem.com.tr">Mine Dogan</a>
+ *
+ */
 public class SudoersProfileDialog implements IProfileDialog {
 	
 	private static final Logger logger = LoggerFactory.getLogger(SudoersProfileDialog.class);
@@ -42,7 +48,16 @@ public class SudoersProfileDialog implements IProfileDialog {
 		
 		btnPrivilege[1] = new Button(composite, SWT.RADIO);
 		btnPrivilege[1].setText(Messages.getString("NOT_GRANT_PRIVILEGE"));
-		btnPrivilege[1].setSelection(true);
+		
+		boolean isGranted = (profile != null && profile.getProfileData() != null
+				? (boolean) profile.getProfileData().get(SudoersConstants.PARAMETERS.PRIVILEGE) : false);
+		
+		if(isGranted) {
+			btnPrivilege[0].setSelection(true);
+		}
+		else {
+			btnPrivilege[1].setSelection(true);
+		}
 	}
 	
 	@Override
