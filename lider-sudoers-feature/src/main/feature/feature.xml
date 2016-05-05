@@ -29,6 +29,7 @@
     </feature>
 
     <feature name="lider-sudoers-bundles" version="${project.version}">
+    	<configfile finalname="/etc/tr.org.liderahenk.sudoers.cfg">mvn:${groupId}/lider-sudoers/${project.version}/cfg</configfile>
 		<bundle>mvn:tr.org.liderahenk/lider-sudoers/${project.version}</bundle>
     </feature>
 
