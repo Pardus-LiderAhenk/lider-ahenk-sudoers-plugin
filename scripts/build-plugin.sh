@@ -1,9 +1,9 @@
 #!/bin/bash
 
 ###
-# This script builds the project and generates Lider (lider-backup.jar) & Lider Console (lider-console-backup.jar) distribution files as well as Ahenk package (backup.deb)
+# This script builds the project and generates Lider (lider-sudoers.jar) & Lider Console (lider-console-sudoers.jar) distribution files as well as Ahenk package (sudoers.deb)
 #
-# Generated files can be found under /tmp/lider-ahenk-backup-plugin/
+# Generated files can be found under /tmp/lider-ahenk-sudoers-plugin/
 ###
 
 pushd $(dirname $0) > /dev/null
@@ -19,20 +19,20 @@ echo "lider & lider-console modules built successfully."
 
 # Generate Ahenk package
 echo "Generating Ahenk package..."
-cd "$PRJ_ROOT_PATH"/ahenk-backup
+cd "$PRJ_ROOT_PATH"/ahenk-sudoers
 dpkg-buildpackage -b
 echo "Generated Ahenk package"
 
-EXPORT_PATH=/tmp/lider-ahenk-backup-plugin
+EXPORT_PATH=/tmp/lider-ahenk-sudoers-plugin
 echo "Export path: $EXPORT_PATH"
 
 # Copy resulting files
 echo "Copying generated files to $EXPORT_PATH..."
 mkdir -p "$EXPORT_PATH"
-mv -f "$PRJ_ROOT_PATH"/backup*.deb "$EXPORT_PATH"
-mv -f "$PRJ_ROOT_PATH"/backup*.changes "$EXPORT_PATH"
-cp -rf "$PRJ_ROOT_PATH"/lider-backup/target/lider-*.jar "$EXPORT_PATH"
-cp -rf "$PRJ_ROOT_PATH"/lider-console-backup/target/lider-console-*.jar "$EXPORT_PATH"
+mv -f "$PRJ_ROOT_PATH"/sudoers*.deb "$EXPORT_PATH"
+mv -f "$PRJ_ROOT_PATH"/sudoers*.changes "$EXPORT_PATH"
+cp -rf "$PRJ_ROOT_PATH"/lider-sudoers/target/lider-*.jar "$EXPORT_PATH"
+cp -rf "$PRJ_ROOT_PATH"/lider-console-sudoers/target/lider-console-*.jar "$EXPORT_PATH"
 echo "Copied generated files."
 
 echo "Built finished successfully!"
