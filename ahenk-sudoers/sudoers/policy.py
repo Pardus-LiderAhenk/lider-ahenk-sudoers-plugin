@@ -3,23 +3,16 @@
 # Author: Mine Dogan <mine.dogan@agem.com.tr>
 
 import json
-import subprocess
-from subprocess import PIPE
 
-from base.plugin.AbstractCommand import AbstractCommand
+from base.plugin.abstract_plugin import AbstractPlugin
 
 
-class GrantSudoAccess(AbstractCommand):
+class GrantSudoAccess(AbstractPlugin):
     def __init__(self, data, context):
-        super(GrantSudoAccess, self).__init__()
+        super(AbstractPlugin, self).__init__()
         self.data = data
         self.context = context
-
-        self.context.put('message_type', 'qwe')
-        self.context.put('message_code', 'qwe')
-        self.context.put('message', 'qwe')
-        self.context.put('data', None)
-        self.context.put('content_type', None)
+        self.logger = self.get_logger()
 
     def handle_policy(self):
 
@@ -28,36 +21,35 @@ class GrantSudoAccess(AbstractCommand):
         try:
             if username is not None:
                 exec_user = 'exec su -l ' + username
-                priv = json.loads(self.data)
+                jason_data = json.loads(self.data)
 
-                if str(priv['privilege']) == 'True':
-                    add_user = subprocess.Popen('adduser ' + username + ' sudo', stderr=PIPE, stdout=PIPE, shell=True)
-                    add_user.wait()
-                    process = self.context.execute(exec_user)
-                    process.wait()
+                if str(jason_data['privilege']) == 'True':
+                    self.execute('adduser {} sudo'.format(username))
+                    self.logger.debug('[Sudoers]User sudoers set privilege to {}.'.format(username))
+                    self.execute(exec_user)
+
+                    self.logger.debug('[Sudoers] Creating response...')
+                    self.context.create_response(self.get_message_code().POLICY_PROCESSED, 'User sudoers set privilege to {} successfully.'.format(username))
+
+                elif str(jason_data['privilege']) == 'False':
+                    self.execute('deluser {} sudo'.format(username))
+                    self.logger.debug('[Sudoers]User sudoers removed privilege from {}.'.format(username))
+                    self.execute(exec_user)
+
+                    self.logger.debug('[Sudoers] Creating response...')
+                    self.context.create_response(self.get_message_code().POLICY_PROCESSED, 'User sudoers removed privilege from {} successfully.'.format(username))
+
                 else:
-                    del_user = subprocess.Popen('deluser ' + username + ' sudo', stderr=PIPE, stdout=PIPE, shell=True)
-                    del_user.wait()
-                    process = self.context.execute(exec_user)
-                    process.wait()
+                    self.context.create_response(self.get_message_code().POLICY_PROCESSED, 'Missing parameter error.')
 
-                self.set_result('POLICY_STATUS', 'POLICY_PROCESSED', 'User sudoers profile processed successfully.')
-                self.logger.info('[Sudoers] Sudoers profile is handled successfully.')
-
+                self.logger.debug('[Sudoers] Sudoers profile is handled successfully.')
             else:
-                self.set_result('POLICY_STATUS', 'POLICY_PROCESSED', 'There is no username.')
+                self.logger.error('[Sudoers] Username parameter is missing.')
+                self.context.create_response(self.get_message_code().POLICY_ERROR, 'Username is missing')
 
         except Exception as e:
-            self.logger.error('[Sudoers] A problem occured while handling sudoers profile: {0}'.format(str(e)))
-            self.set_result('POLICY_STATUS', 'POLICY_PROCESSED',
-                            'A problem occured while handling sudoers profile: {0}'.format(str(e)))
-
-    def set_result(self, type=None, code=None, message=None, data=None, content_type=None):
-        self.context.put('message_type', type)
-        self.context.put('message_code', code)
-        self.context.put('message', message)
-        # self.context.put('data')
-        # self.context.put('content_type')
+            self.logger.error('[Sudoers] A problem occurred while handling sudoers profile: {0}'.format(str(e)))
+            self.context.create_response(self.get_message_code().POLICY_ERROR, 'A problem occurred while handling sudoers profile: {0}'.format(str(e)))
 
 
 def handle_policy(profile_data, context):
