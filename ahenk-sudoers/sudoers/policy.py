@@ -20,21 +20,20 @@ class GrantSudoAccess(AbstractPlugin):
 
         try:
             if username is not None:
-                exec_user = 'exec su -l ' + username
-                jason_data = json.loads(self.data)
+                json_data = json.loads(self.data)
 
-                if str(jason_data['privilege']) == 'True':
+                if str(json_data['privilege']) == 'True':
                     self.execute('adduser {} sudo'.format(username))
                     self.logger.debug('[Sudoers]User sudoers set privilege to {}.'.format(username))
-                    self.execute(exec_user)
+                    # TODO command instead reboot
 
                     self.logger.debug('[Sudoers] Creating response...')
                     self.context.create_response(self.get_message_code().POLICY_PROCESSED, 'User sudoers set privilege to {} successfully.'.format(username))
 
-                elif str(jason_data['privilege']) == 'False':
+                elif str(json_data['privilege']) == 'False':
                     self.execute('deluser {} sudo'.format(username))
                     self.logger.debug('[Sudoers]User sudoers removed privilege from {}.'.format(username))
-                    self.execute(exec_user)
+                    # TODO command instead reboot
 
                     self.logger.debug('[Sudoers] Creating response...')
                     self.context.create_response(self.get_message_code().POLICY_PROCESSED, 'User sudoers removed privilege from {} successfully.'.format(username))
