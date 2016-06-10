@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import tr.org.liderahenk.liderconsole.core.dialogs.IProfileDialog;
+import tr.org.liderahenk.liderconsole.core.exceptions.ValidationException;
 import tr.org.liderahenk.liderconsole.core.model.Profile;
 import tr.org.liderahenk.sudoers.constants.SudoersConstants;
 import tr.org.liderahenk.sudoers.i18n.Messages;
@@ -70,6 +71,11 @@ public class SudoersProfileDialog implements IProfileDialog {
 			profileData.put(SudoersConstants.PARAMETERS.PRIVILEGE, false);
 		}
 		return profileData;
+	}
+
+	@Override
+	public void validateBeforeSave() throws ValidationException {
+		
 	}
 	
 }
