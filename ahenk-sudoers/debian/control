@@ -3,12 +3,12 @@ Section: unknown
 Priority: optional
 Maintainer: TUBITAK ULAKBIM
 Build-Depends: debhelper (>= 9)
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 Homepage: http://www.liderahenk.org.tr
 
-Package: sudoers
+Package: ahenk-sudoers
 Version: 1.0.0
 Architecture: any
 Depends: python3 (>= 3), sudo
-Description: LiderAhenk ahenk-sudoers application
- Long Desc
+Description: Lider Ahenk sudoers plugin
+
