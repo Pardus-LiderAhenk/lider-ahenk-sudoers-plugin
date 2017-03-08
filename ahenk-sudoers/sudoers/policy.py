@@ -12,6 +12,8 @@ class GrantSudoAccess(AbstractPlugin):
         super(AbstractPlugin, self).__init__()
         self.data = data
         self.context = context
+        self.sudoer_line = '{0} ALL = NOPASSWD : /usr/bin/apt-get , /usr/bin/aptitude'
+        self.sudoer_file_path = '/etc/sudoers'
         self.logger = self.get_logger()
 
     def handle_policy(self):
@@ -23,22 +25,27 @@ class GrantSudoAccess(AbstractPlugin):
                 json_data = json.loads(self.data)
 
                 if str(json_data['privilege']) == 'True':
-                    self.execute('adduser {} sudo'.format(username))
-                    self.logger.debug('User sudoers set privilege to {}.'.format(username))
-                    # TODO command instead reboot
+
+                    sudoer_data = self.read_file(self.sudoer_file_path)
+                    self.write_file(self.sudoer_file_path, sudoer_data.replace(self.sudoer_line.format(username),
+                                                                               '') + '\n' + self.sudoer_line.format(
+                        username) + '\n')
+
+                    self.logger.debug('User sudoers set privilege to {0}.'.format(username))
 
                     self.logger.debug('Creating response...')
                     self.context.create_response(self.get_message_code().POLICY_PROCESSED,
                                                  'User sudoers set privilege to {} successfully.'.format(username))
 
                 elif str(json_data['privilege']) == 'False':
-                    self.execute('deluser {} sudo'.format(username))
-                    self.logger.debug('[Sudoers]User sudoers removed privilege from {}.'.format(username))
-                    # TODO command instead reboot
+
+                    sudoer_data = self.read_file(self.sudoer_file_path)
+                    self.write_file(self.sudoer_file_path, sudoer_data.replace(self.sudoer_line.format(username), ''))
+                    self.logger.debug('User sudoers removed privilege from {0}.'.format(username))
 
                     self.logger.debug('Creating response...')
                     self.context.create_response(self.get_message_code().POLICY_PROCESSED,
-                                                 'User sudoers removed privilege from {} successfully.'.format(
+                                                 'User sudoers removed privilege from {0} successfully.'.format(
                                                      username))
 
                 else:
