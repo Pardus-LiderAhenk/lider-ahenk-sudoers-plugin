@@ -34,7 +34,7 @@ class GrantSudoAccess(AbstractPlugin):
                     self.logger.debug('User sudoers set privilege to {0}.'.format(username))
 
                     self.logger.debug('Creating response...')
-                    self.context.create_response(self.get_message_code().POLICY_PROCESSED,
+                    self.context.create_response(self.get_message_code().POLICY_PROCESSED.value,
                                                  'User sudoers set privilege to {} successfully.'.format(username))
 
                 elif str(json_data['privilege']) == 'False':
@@ -44,21 +44,21 @@ class GrantSudoAccess(AbstractPlugin):
                     self.logger.debug('User sudoers removed privilege from {0}.'.format(username))
 
                     self.logger.debug('Creating response...')
-                    self.context.create_response(self.get_message_code().POLICY_PROCESSED,
+                    self.context.create_response(self.get_message_code().POLICY_PROCESSED.value,
                                                  'User sudoers removed privilege from {0} successfully.'.format(
                                                      username))
 
                 else:
-                    self.context.create_response(self.get_message_code().POLICY_PROCESSED, 'Missing parameter error.')
+                    self.context.create_response(self.get_message_code().POLICY_PROCESSED.value, 'Missing parameter error.')
 
                 self.logger.debug('Sudoers profile is handled successfully.')
             else:
                 self.logger.error('Username parameter is missing.')
-                self.context.create_response(self.get_message_code().POLICY_ERROR, 'Username is missing')
+                self.context.create_response(self.get_message_code().POLICY_ERROR.value, 'Username is missing')
 
         except Exception as e:
             self.logger.error('A problem occurred while handling sudoers profile: {0}'.format(str(e)))
-            self.context.create_response(self.get_message_code().POLICY_ERROR,
+            self.context.create_response(self.get_message_code().POLICY_ERROR.value,
                                          'A problem occurred while handling sudoers profile: {0}'.format(str(e)))
 
 
