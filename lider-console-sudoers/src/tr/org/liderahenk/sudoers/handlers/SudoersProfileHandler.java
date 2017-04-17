@@ -49,7 +49,7 @@ public class SudoersProfileHandler extends LiderAbstractHandler {
 public ProfileEditorInput getEditorInput() {
 	// TODO Auto-generated method stub
 	return new ProfileEditorInput(Messages.getString("SUDOERS"), SudoersConstants.PLUGIN_NAME, 
-			SudoersConstants.PLUGIN_VERSION, new SudoersProfileDialog())
+			SudoersConstants.PLUGIN_VERSION, new SudoersProfileDialog());
 }
 
 }
