@@ -15,12 +15,13 @@ import tr.org.liderahenk.sudoers.dialogs.SudoersProfileDialog;
 import tr.org.liderahenk.sudoers.i18n.Messages;
 import tr.org.liderahenk.liderconsole.core.constants.LiderConstants;
 import tr.org.liderahenk.liderconsole.core.editorinput.ProfileEditorInput;
+import tr.org.liderahenk.liderconsole.core.handlers.LiderAbstractHandler;
 
 /**
  * Profile definition handler for sudoers plugin.
  *
  */
-public class SudoersProfileHandler extends AbstractHandler {
+public class SudoersProfileHandler extends LiderAbstractHandler {
 
 	private Logger logger = LoggerFactory.getLogger(SudoersProfileHandler.class);
 
@@ -43,5 +44,12 @@ public class SudoersProfileHandler extends AbstractHandler {
 
         return null;
 	}
+	
+ @Override
+public ProfileEditorInput getEditorInput() {
+	// TODO Auto-generated method stub
+	return new ProfileEditorInput(Messages.getString("SUDOERS"), SudoersConstants.PLUGIN_NAME, 
+			SudoersConstants.PLUGIN_VERSION, new SudoersProfileDialog())
+}
 
 }
