@@ -25,25 +25,25 @@ public class SudoersProfileHandler extends LiderAbstractHandler {
 
 	private Logger logger = LoggerFactory.getLogger(SudoersProfileHandler.class);
 
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		
-		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-        IWorkbenchPage page = window.getActivePage();
-        
-        try {
-			// Here we open default profile editor implementation so that all
-			// profiles can be handled by Lider Console Core.
-			// We also pass our profile dialog implementation as parameter to
-			// allow the editor use it dynamically.
-			page.openEditor(new ProfileEditorInput(Messages.getString("SUDOERS"), SudoersConstants.PLUGIN_NAME, 
-					SudoersConstants.PLUGIN_VERSION, new SudoersProfileDialog()), 
-					LiderConstants.EDITORS.PROFILE_EDITOR);
-		} catch (PartInitException e) {
-			logger.error(e.getMessage(), e);
-		}
-
-        return null;
-	}
+//	public Object execute(ExecutionEvent event) throws ExecutionException {
+//		
+//		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+//        IWorkbenchPage page = window.getActivePage();
+//        
+//        try {
+//			// Here we open default profile editor implementation so that all
+//			// profiles can be handled by Lider Console Core.
+//			// We also pass our profile dialog implementation as parameter to
+//			// allow the editor use it dynamically.
+//			page.openEditor(new ProfileEditorInput(Messages.getString("SUDOERS"), SudoersConstants.PLUGIN_NAME, 
+//					SudoersConstants.PLUGIN_VERSION, new SudoersProfileDialog()), 
+//					LiderConstants.EDITORS.PROFILE_EDITOR);
+//		} catch (PartInitException e) {
+//			logger.error(e.getMessage(), e);
+//		}
+//
+//        return null;
+//	}
 	
  @Override
 public ProfileEditorInput getEditorInput() {
