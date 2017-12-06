@@ -33,7 +33,7 @@ Sudoers plugin for [Lider Ahenk project](http://www.liderahenk.org.tr) which can
 
 #### Ahenk
 
-1. Create a soft link for _ahenk-sudoers/sudoers_ directory via `sudo ln -s lider-ahenk-sudoers-plugin/ahenk-sudoers/sudoers/ /opt/ahenk/plugins`
+1. Create a soft link for _ahenk-sudoers/sudoers_ directory via `sudo ln -s lider-ahenk-sudoers-plugin/ahenk-sudoers/sudoers/ /usr/share/ahenk/plugins`
 
 ## Contribution
 
