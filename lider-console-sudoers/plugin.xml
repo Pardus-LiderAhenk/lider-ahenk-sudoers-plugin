@@ -96,7 +96,7 @@
   		<policyItem 
   				label="%command.profile" 
   				pluginName="sudoers" 
-  				pluginVersion="1.0.0" 
+  				pluginVersion="1.1" 
   				profileCommandId="tr.org.liderahenk.liderconsole.commands.SudoersProfile" >
   		</policyItem>
   	</extension>
