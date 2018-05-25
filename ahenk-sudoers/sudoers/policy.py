@@ -12,7 +12,7 @@ class GrantSudoAccess(AbstractPlugin):
         super(AbstractPlugin, self).__init__()
         self.data = data
         self.context = context
-        self.sudoer_line = '{0} ALL = NOPASSWD : /usr/bin/apt-get , /usr/bin/aptitude'
+        self.sudoer_line = '{0} ALL = NOPASSWD : /usr/bin/apt-get, /usr/bin/apt , /usr/bin/aptitude'
         self.sudoer_file_path = '/etc/sudoers'
         self.logger = self.get_logger()
 

@@ -7,7 +7,7 @@ class Safe(AbstractPlugin):
         self.context = context
         self.username = str(context.get_username())
         self.logger = self.get_logger()
-        self.sudoer_line = '{0} ALL = NOPASSWD : /usr/bin/apt-get , /usr/bin/aptitude'
+        self.sudoer_line = '{0} ALL = NOPASSWD : /usr/bin/apt-get, /usr/bin/apt , /usr/bin/aptitude'
         self.sudoer_file_path = '/etc/sudoers'
         self.logger.debug('Parameters were initialized.')
 
