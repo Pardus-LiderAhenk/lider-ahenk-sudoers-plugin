@@ -13,7 +13,7 @@ class GrantSudoAccess(AbstractPlugin):
         self.data = data
         self.context = context
         self.sudoer_line = '{0} ALL = NOPASSWD : /usr/bin/apt-get, /usr/bin/apt , /usr/bin/aptitude'
-        self.sudoer_file_path = '/etc/sudoers'
+        self.sudoer_file_path = '/etc/sudoers.d/{0}_sudoers'
         self.logger = self.get_logger()
 
     def handle_policy(self):
@@ -25,28 +25,31 @@ class GrantSudoAccess(AbstractPlugin):
                 json_data = json.loads(self.data)
 
                 if str(json_data['privilege']) == 'True':
+                    if self.is_exist(self.sudoer_file_path):
+                        self.logger.debug('User sudoers is exist privilege to {}'.format(username))
+                    else:
+                        self.create_file(self.sudoer_file_path.format(username))
 
-                    sudoer_data = self.read_file(self.sudoer_file_path)
-                    self.write_file(self.sudoer_file_path, sudoer_data.replace(self.sudoer_line.format(username),
-                                                                               '') + '\n' + self.sudoer_line.format(
-                        username) + '\n')
+                        sudoer_data = self.read_file(self.sudoer_file_path.format(username))
+                        self.write_file(self.sudoer_file_path.format(username), sudoer_data.replace(self.sudoer_line.format(username),
+                                                                               '') + '\n' + self.sudoer_line.format(username) + '\n')
 
-                    self.logger.debug('User sudoers set privilege to {0}.'.format(username))
+                        self.logger.debug('User sudoers set privilege to {0}.'.format(username))
 
-                    self.logger.debug('Creating response...')
-                    self.context.create_response(self.get_message_code().POLICY_PROCESSED.value,
+                        self.logger.debug('Creating response...')
+                        self.context.create_response(self.get_message_code().POLICY_PROCESSED.value,
                                                  'User sudoers set privilege to {} successfully.'.format(username))
 
                 elif str(json_data['privilege']) == 'False':
 
-                    sudoer_data = self.read_file(self.sudoer_file_path)
-                    self.write_file(self.sudoer_file_path, sudoer_data.replace(self.sudoer_line.format(username), ''))
-                    self.logger.debug('User sudoers removed privilege from {0}.'.format(username))
-
-                    self.logger.debug('Creating response...')
-                    self.context.create_response(self.get_message_code().POLICY_PROCESSED.value,
-                                                 'User sudoers removed privilege from {0} successfully.'.format(
-                                                     username))
+                    if self.is_exist(self.sudoer_file_path.format(username)):
+                        self.delete_file(self.sudoer_file_path.format(username))
+                        self.logger.debug('User sudoers removed privilege from {0}.'.format(username))
+                        self.logger.debug('Creating response...')
+                        self.context.create_response(self.get_message_code().POLICY_PROCESSED.value,
+                                                     'User sudoers removed privilege from {0} successfully.'.format(username))
+                    else:
+                        self.logger.debug("{0} user's privilege file not found".format(username))
 
                 else:
                     self.context.create_response(self.get_message_code().POLICY_PROCESSED.value, 'Missing parameter error.')
